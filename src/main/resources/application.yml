@@ -1,3 +1,6 @@
+jwt:
+  secret: "papiSimplonSenegal1998@2022"
+
 server:
   port: 8081
 spring:
