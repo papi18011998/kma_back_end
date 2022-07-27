@@ -2,6 +2,9 @@ package com.example.spring_jwt_get_arrays.service.impl;
 
 import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
+import com.example.spring_jwt_get_arrays.exception.domain.EmailExistException;
+import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
+import com.example.spring_jwt_get_arrays.exception.domain.UsernameExistException;
 import com.example.spring_jwt_get_arrays.repository.UserRepository;
 import com.example.spring_jwt_get_arrays.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -45,17 +48,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User register(String firstName, String lastName, String username, String email) {
-        validateNewUsernameAnEmail();
+    public User register(String firstName, String lastName, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException {
+        validateNewUsernameAnEmail(StringUtils.EMPTY,username,email);
         return null;
     }
 
-    private void validateNewUsernameAnEmail(String currentUsername,String username, String newEmail) {
+    private User validateNewUsernameAnEmail(String currentUsername,String newUsername, String newEmail) throws EmailExistException, UsernameExistException, UserNotFoundException {
         if (StringUtils.isNotBlank(currentUsername)){
             User currentUser = findUserByUsername(currentUsername);
             if(currentUser == null){
                 throw  new UserNotFoundException("No user found by username"+currentUsername);
             }
+            User userByUserName = findUserByUsername(newUsername);
+            if (userByUserName != null && currentUser.getId().equals(userByUserName.getId())){
+                throw  new UsernameExistException("Username is already exist");
+            }
+            User userByEmail = findUserByUsername(newEmail);
+            if (userByEmail != null && currentUser.getId().equals(userByEmail.getId())){
+                throw  new EmailExistException("Email is already exist");
+            }
+            return currentUser;
+        }else{
+            User userByUserName = findUserByUsername(newUsername);
+            if (userByUserName != null){
+                throw  new UsernameExistException("Username is already exist");
+            }
+            User userByEmail = findUserByUsername(newEmail);
+            if (userByEmail != null){
+                throw  new EmailExistException("Email is already exist");
+            }
+            return null;
         }
     }
 
