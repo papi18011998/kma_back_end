@@ -4,6 +4,7 @@ import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
 import com.example.spring_jwt_get_arrays.repository.UserRepository;
 import com.example.spring_jwt_get_arrays.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.TransactionScoped;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @TransactionScoped
@@ -40,5 +42,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             LOGGER.info("Returning found user by username"+username);
             return  userPrincipal;
         }
+    }
+
+    @Override
+    public User register(String firstName, String lastName, String username, String email) {
+        validateNewUsernameAnEmail();
+        return null;
+    }
+
+    private void validateNewUsernameAnEmail(String currentUsername,String username, String newEmail) {
+        if (StringUtils.isNotBlank(currentUsername)){
+            User currentUser = findUserByUsername(currentUsername);
+            if(currentUser == null){
+                throw  new UserNotFoundException("No user found by username"+currentUsername);
+            }
+        }
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return null;
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return null;
     }
 }
