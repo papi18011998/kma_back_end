@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private String generatePassword() {
-        return RandomStringUtils.randomAlphanumeric(10)
+        return RandomStringUtils.randomAlphanumeric(10);
     }
 
     private String generateUserId() {
@@ -98,12 +98,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if(currentUser == null){
                 throw  new UserNotFoundException("No user found by username"+currentUsername);
             }
-            User userByUserName = findUserByUsername(newUsername);
-            if (userByUserName != null && currentUser.getId().equals(userByUserName.getId())){
+            User userByNewUserName = findUserByUsername(newUsername);
+            if (userByNewUserName != null && currentUser.getId().equals(userByNewUserName.getId())){
                 throw  new UsernameExistException("Username is already exist");
             }
-            User userByEmail = findUserByUsername(newEmail);
-            if (userByEmail != null && currentUser.getId().equals(userByEmail.getId())){
+            User userByNewEmail = findUserByUsername(newEmail);
+            if (userByNewEmail != null && currentUser.getId().equals(userByNewEmail.getId())){
                 throw  new EmailExistException("Email is already exist");
             }
             return currentUser;
