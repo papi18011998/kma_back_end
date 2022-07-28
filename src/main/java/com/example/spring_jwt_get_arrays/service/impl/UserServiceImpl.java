@@ -93,29 +93,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return RandomStringUtils.randomNumeric(10);
     }
 
-    private User validateNewUsernameAndEmail(String currentUsername,String newUsername, String newEmail) throws EmailExistException, UsernameExistException, UserNotFoundException {
-        User userByNewUserName = findUserByUsername(newUsername);
-        User userByNewEmail = findUserByUsername(newEmail);
-        if (StringUtils.isNotBlank(currentUsername)){
+    private User validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail) throws UserNotFoundException, UsernameExistException, EmailExistException {
+        User userByNewUsername = findUserByUsername(newUsername);
+        User userByNewEmail = findUserByEmail(newEmail);
+        if(StringUtils.isNotBlank(currentUsername)) {
             User currentUser = findUserByUsername(currentUsername);
-            if(currentUser == null){
-                throw  new UserNotFoundException(NO_USER_FOUND_BY_USERNAME +currentUsername);
+            if(currentUser == null) {
+                throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + currentUsername);
             }
-
-            if (userByNewUserName != null && currentUser.getId().equals(userByNewUserName.getId())){
-                throw  new UsernameExistException(USERNAME_IS_ALREADY_EXIST);
+            if(userByNewUsername != null && !currentUser.getId().equals(userByNewUsername.getId())) {
+                throw new UsernameExistException(USERNAME_IS_ALREADY_EXIST);
             }
-
-            if (userByNewEmail != null && currentUser.getId().equals(userByNewEmail.getId())){
-                throw  new EmailExistException(EMAIL_IS_ALREADY_EXIST);
+            if(userByNewEmail != null && !currentUser.getId().equals(userByNewEmail.getId())) {
+                throw new EmailExistException(EMAIL_IS_ALREADY_EXIST);
             }
             return currentUser;
-        }else{
-            if (userByNewUserName != null){
-                throw  new UsernameExistException(USERNAME_IS_ALREADY_EXIST);
+        } else {
+            if(userByNewUsername != null) {
+                throw new UsernameExistException(USERNAME_IS_ALREADY_EXIST);
             }
-            if (userByNewEmail != null){
-                throw  new EmailExistException(EMAIL_IS_ALREADY_EXIST);
+            if(userByNewEmail != null) {
+                throw new EmailExistException(EMAIL_IS_ALREADY_EXIST);
             }
             return null;
         }
