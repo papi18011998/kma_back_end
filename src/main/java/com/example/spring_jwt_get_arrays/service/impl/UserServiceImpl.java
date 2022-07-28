@@ -1,5 +1,6 @@
 package com.example.spring_jwt_get_arrays.service.impl;
 
+import static com.example.spring_jwt_get_arrays.constant.UserImplConstant.*;
 import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
 import com.example.spring_jwt_get_arrays.exception.domain.EmailExistException;
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User register(String firstName, String lastName, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException {
-        validateNewUsernameAnEmail(StringUtils.EMPTY,username,email);
+        validateNewUsernameAndEmail(StringUtils.EMPTY,username,email);
         User user = new User();
         user.setUserId(generateUserId());
         String password = generatePassword();
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private String getTemporyProfileImageUrl() {
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/image/profile/temp").toUriString();
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_IMAGE_PATH).toUriString();
     }
 
     private String encodePassword(String password) {
@@ -92,29 +93,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return RandomStringUtils.randomNumeric(10);
     }
 
-    private User validateNewUsernameAnEmail(String currentUsername,String newUsername, String newEmail) throws EmailExistException, UsernameExistException, UserNotFoundException {
+    private User validateNewUsernameAndEmail(String currentUsername,String newUsername, String newEmail) throws EmailExistException, UsernameExistException, UserNotFoundException {
+        User userByNewUserName = findUserByUsername(newUsername);
+        User userByNewEmail = findUserByUsername(newEmail);
         if (StringUtils.isNotBlank(currentUsername)){
             User currentUser = findUserByUsername(currentUsername);
             if(currentUser == null){
-                throw  new UserNotFoundException("No user found by username"+currentUsername);
+                throw  new UserNotFoundException(NO_USER_FOUND_BY_USERNAME +currentUsername);
             }
-            User userByNewUserName = findUserByUsername(newUsername);
+
             if (userByNewUserName != null && currentUser.getId().equals(userByNewUserName.getId())){
-                throw  new UsernameExistException("Username is already exist");
+                throw  new UsernameExistException(USERNAME_IS_ALREADY_EXIST);
             }
-            User userByNewEmail = findUserByUsername(newEmail);
+
             if (userByNewEmail != null && currentUser.getId().equals(userByNewEmail.getId())){
-                throw  new EmailExistException("Email is already exist");
+                throw  new EmailExistException(EMAIL_IS_ALREADY_EXIST);
             }
             return currentUser;
         }else{
-            User userByUserName = findUserByUsername(newUsername);
-            if (userByUserName != null){
-                throw  new UsernameExistException("Username is already exist");
+            if (userByNewUserName != null){
+                throw  new UsernameExistException(USERNAME_IS_ALREADY_EXIST);
             }
-            User userByEmail = findUserByUsername(newEmail);
-            if (userByEmail != null){
-                throw  new EmailExistException("Email is already exist");
+            if (userByNewEmail != null){
+                throw  new EmailExistException(EMAIL_IS_ALREADY_EXIST);
             }
             return null;
         }
@@ -122,16 +123,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> getUsers() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
     public User findUserByUsername(String username) {
-        return null;
+        return userRepository.findByUserName(username);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email);
     }
 }
