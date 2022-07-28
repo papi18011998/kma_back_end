@@ -11,18 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = {"/","/users"})
+@RequestMapping("users")
 public class UserRessource extends ExceptionHandling {
-    private UserService userService;
+    private final UserService userService;
 
     public UserRessource(UserService userService) {
         this.userService = userService;
     }
-
     @PostMapping("register")
     public ResponseEntity<User> register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UsernameExistException {
-        User loginUser = userService.register(user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail());
-        return  new ResponseEntity<>(loginUser,HttpStatus.OK);
+        User newUser = userService.register(user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail());
+        return  new ResponseEntity<>(newUser,HttpStatus.OK);
 
     }
 }
