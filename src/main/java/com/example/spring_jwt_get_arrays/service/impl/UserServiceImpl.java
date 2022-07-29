@@ -7,6 +7,7 @@ import com.example.spring_jwt_get_arrays.exception.domain.EmailExistException;
 import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.exception.domain.UsernameExistException;
 import com.example.spring_jwt_get_arrays.repository.UserRepository;
+import com.example.spring_jwt_get_arrays.service.LoginAttempsService;
 import com.example.spring_jwt_get_arrays.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.transaction.TransactionScoped;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_USER;
 
@@ -33,9 +35,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    private LoginAttempsService loginAttempsService;
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttempsService loginAttempsService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.loginAttempsService = loginAttempsService;
     }
 
     @Override
@@ -45,12 +49,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             LOGGER.error("User not found by username "+ username);
             throw  new UsernameNotFoundException("User not found by username "+ username);
         }else{
+            validateLoginAttempt(user);
             user.setLastLoginDateDisplay(user.getLastLoginDate());
             user.setLastLoginDate(new Date());
             userRepository.save(user);
             UserPrincipal userPrincipal = new UserPrincipal(user);
             LOGGER.info("Returning found user by username"+username);
             return  userPrincipal;
+        }
+    }
+
+    private void validateLoginAttempt(User user) {
+        if (user.isNotLocked()){
+            if (loginAttempsService.hasExceededMaxAttempts(user.getUserName())){
+                user.setNotLocked(false);
+            }else {
+                user.setNotLocked(true);
+            }
+        }else{
+            loginAttempsService.evictUserFromLoginAttemptCache(user.getUserName());
         }
     }
 
