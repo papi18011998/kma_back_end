@@ -10,5 +10,5 @@ import java.util.List;
 public interface UserService {
     User register(String prenom, String nom, String username,String adresse,String telephone, Long genreId) throws UserNotFoundException,UsernameExistException, MessagingException;
     List<User> getUsers();
-    User findUserByUsername(String username);;
+    User findUserByUsername(String username);
 }
