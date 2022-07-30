@@ -2,45 +2,53 @@ package com.example.spring_jwt_get_arrays.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type",length = 20)
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false,updatable = false)
     private Long id;
-    private String userId;
-    private String firstName;
-    private String lastName;
+    private String prenom;
+    private String nom;
     private  String userName;
     private String password;
-    private String email;
-    private String profileImageUrl;
-    private Date lastLoginDate;
-    private Date lastLoginDateDisplay;
+    private String adresse;
     private Date joinDate;
     private String role;//ROLE_USER, ROLE_ADMIN
     private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked;
-
-    public User() {}
-
-    public User(Long id, String userId, String firstName, String lastName, String userName, String password, String email, String profileImageUrl, Date lastLoginDate, Date lastLoginDateDisplay, Date joinDate, String role, String[] authorities, boolean isActive, boolean isNotLocked) {
+    private String telephone;
+    @ManyToOne
+    private Genre genre;
+    public User(Long id, String prenom, String nom, String userName, String password, String adresse, Date joinDate, String role, String[] authorities, boolean isActive, boolean isNotLocked, String telephone, Genre genre) {
         this.id = id;
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.prenom = prenom;
+        this.nom = nom;
         this.userName = userName;
         this.password = password;
-        this.email = email;
-        this.profileImageUrl = profileImageUrl;
-        this.lastLoginDate = lastLoginDate;
-        this.lastLoginDateDisplay = lastLoginDateDisplay;
+        this.adresse = adresse;
         this.joinDate = joinDate;
         this.role = role;
         this.authorities = authorities;
         this.isActive = isActive;
         this.isNotLocked = isNotLocked;
+        this.telephone = telephone;
+        this.genre = genre;
+    }
+
+    public User() {
+
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public Long getId() {
@@ -51,28 +59,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getNom() {
+        return nom;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public String getUserName() {
@@ -91,36 +91,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAdresse() {
+        return adresse;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
-    }
-
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
-    }
-
-    public Date getLastLoginDate() {
-        return lastLoginDate;
-    }
-
-    public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
-    }
-
-    public Date getLastLoginDateDisplay() {
-        return lastLoginDateDisplay;
-    }
-
-    public void setLastLoginDateDisplay(Date lastLoginDateDisplay) {
-        this.lastLoginDateDisplay = lastLoginDateDisplay;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
     public Date getJoinDate() {
@@ -161,5 +137,13 @@ public class User {
 
     public void setNotLocked(boolean notLocked) {
         isNotLocked = notLocked;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 }

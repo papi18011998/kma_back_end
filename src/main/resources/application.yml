@@ -2,14 +2,14 @@ jwt:
   secret: "papiSimplonSenegal1998@2022"
 
 server:
-  port: 8081
+  port: 8000
   error:
     whitelabel:
       enabled: false
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/java_  supportportal?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/java_gestion_ecole?createDatabaseIfNotExist=true
     password: papi
     username: papi
   jpa:

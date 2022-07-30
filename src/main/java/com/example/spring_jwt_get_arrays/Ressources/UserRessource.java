@@ -1,9 +1,8 @@
 package com.example.spring_jwt_get_arrays.Ressources;
 
-import com.example.spring_jwt_get_arrays.constant.SecurityConstant;
+import com.example.spring_jwt_get_arrays.Ressources.formModels.UserForm;
 import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
-import com.example.spring_jwt_get_arrays.exception.domain.EmailExistException;
 import com.example.spring_jwt_get_arrays.exception.domain.ExceptionHandling;
 import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.exception.domain.UsernameExistException;
@@ -15,6 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+
+import java.util.List;
 
 import static com.example.spring_jwt_get_arrays.constant.SecurityConstant.JWT_TOKEN_HEADER;
 
@@ -51,9 +54,13 @@ public class UserRessource extends ExceptionHandling {
     }
 
     @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UsernameExistException {
-        User newUser = userService.register(user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail());
+    public ResponseEntity<User> register(@RequestBody UserForm userForm) throws UserNotFoundException, UsernameExistException, MessagingException {
+        User newUser = userService.register(userForm.getPrenom(),userForm.getNom(),userForm.getUserName(),userForm.getAdresse(),userForm.getTelephone(),userForm.getGenreId());
         return  new ResponseEntity<>(newUser,HttpStatus.OK);
 
+    }
+    @GetMapping()
+    public List<User> getUsers(){
+        return userService.getUsers();
     }
 }
