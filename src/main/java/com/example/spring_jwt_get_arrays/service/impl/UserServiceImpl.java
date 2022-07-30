@@ -28,7 +28,7 @@ import javax.transaction.TransactionScoped;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_USER;
+import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_ELEVE;
 
 @Service
 @TransactionScoped
@@ -92,8 +92,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setActive(true);
         user.setNotLocked(true);
         user.setGenre(genre);
-        user.setRole(ROLE_USER.name());
-        user.setAuthorities(ROLE_USER.getAuthorities());
+        user.setRole(ROLE_ELEVE.name());
+        user.setAuthorities(ROLE_ELEVE.getAuthorities());
         userRepository.save(user);
         LOGGER.info("New user password is: "+password);
         return user;

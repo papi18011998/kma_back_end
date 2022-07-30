@@ -5,11 +5,10 @@ import com.example.spring_jwt_get_arrays.constant.Authority;
 import static com.example.spring_jwt_get_arrays.constant.Authority.*;
 
 public enum Role {
-    ROLE_USER(USER_AUTHORITIES),
-    ROLE_HR(HR_AUTHORITIES),
-    ROLE_MANAGER(MANAGER_AUTHORITIES),
-    ROLE_ADMIN(ADMIN_AUTHORITIES),
-    ROLE_SUPER_USER(SUPER_ADMIN_AUTHORITIES);
+    ROLE_PARENT(PARENT_AUTHORITIES),
+    ROLE_PROFESSEUR(PROFESSEUR_AUTHORITIES),
+    ROLE_ELEVE(ELEVE_AUTHORITIES),
+    ROLE_ADMIN(ADMIN_AUTHORITIES);
 
     private String[] authorities;
 

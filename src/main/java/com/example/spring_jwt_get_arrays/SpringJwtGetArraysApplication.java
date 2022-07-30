@@ -16,7 +16,7 @@ public class SpringJwtGetArraysApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringJwtGetArraysApplication.class, args);
     }
-    @Bean
+//    @Bean
     public CommandLineRunner runner(GenreRepository genreRepository){
         return args -> {
             Stream.of("Masculin","Féminin").forEach(libelle->{
