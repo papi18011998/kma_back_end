@@ -1,6 +1,6 @@
-package com.example.spring_jwt_get_arrays.Ressources;
+package com.example.spring_jwt_get_arrays.ressources;
 
-import com.example.spring_jwt_get_arrays.Ressources.formModels.UserForm;
+import com.example.spring_jwt_get_arrays.ressources.formModels.UserForm;
 import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
 import com.example.spring_jwt_get_arrays.exception.domain.ExceptionHandling;

@@ -1,4 +1,4 @@
-package com.example.spring_jwt_get_arrays.Ressources.formModels;
+package com.example.spring_jwt_get_arrays.ressources.formModels;
 
 public class UserForm {
     private String prenom;
