@@ -97,12 +97,16 @@ public class KmaMapper {
      public Evaluation evaluationDTO_to_evaluation(EvaluationDTO evaluationDTO){
         Evaluation evaluation = new Evaluation();
         BeanUtils.copyProperties(evaluationDTO,evaluation);
+        evaluation.setMatiere(matiereDTO_to_matiere(evaluationDTO.getMatiere()));
+        evaluation.setEleve(eleveDTO_to_eleve(evaluationDTO.getEleve()));
         return evaluation;
      }
 
      public EvaluationDTO evaluation_to_evaluationDTO(Evaluation evaluation){
         EvaluationDTO evaluationDTO = new EvaluationDTO();
         BeanUtils.copyProperties(evaluation,evaluationDTO);
+        evaluationDTO.setMatiere(matiere_to_matiereDTO(evaluation.getMatiere()));
+        evaluationDTO.setEleve(eleve_to_eleveDTO(evaluation.getEleve()));
         return evaluationDTO;
      }
 

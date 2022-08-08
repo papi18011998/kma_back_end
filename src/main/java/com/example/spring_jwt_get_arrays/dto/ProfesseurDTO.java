@@ -12,8 +12,8 @@ public class ProfesseurDTO extends UtilisateurDTO{
         super();
     }
 
-    public ProfesseurDTO(Long id, String prenom, String nom, String login, String adresse, Boolean is_active, String password, Genre genre, String telephone, Date date_prise_fonction, MatiereDTO matiere) {
-        super(id, prenom, nom, login, adresse, is_active, password, genre, telephone);
+    public ProfesseurDTO(Long id, String prenom, String nom, String userName, String password, String adresse, Date joinDate, String role, String[] authorities, boolean isActive, boolean isNotLocked, String telephone, Genre genre, Date date_prise_fonction, MatiereDTO matiere) {
+        super(id, prenom, nom, userName, password, adresse, joinDate, role, authorities, isActive, isNotLocked, telephone, genre);
         this.date_prise_fonction = date_prise_fonction;
         this.matiere = matiere;
     }

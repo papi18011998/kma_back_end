@@ -29,13 +29,12 @@ import static org.springframework.http.HttpStatus.*;
 @RestControllerAdvice
 public class ExceptionHandling  implements ErrorController {
     private final  Logger LOGGER = LoggerFactory.getLogger(getClass());
-    private static final String ACCOUNT_LOCKED = "Your account has been locked. Please contact administration";
-    private static final String METHOD_IS_NOT_ALLOWED = "This request method is not allowed on this endpoint. Please send a '%s' request";
-    private static final String INTERNAL_SERVER_ERROR_MSG = "An error occurred while processing the request";
-    private static final String INCORRECT_CREDENTIALS = "Username / password incorrect. Please try again";
-    private static final String ACCOUNT_DISABLED = "Your account has been disabled. If this is an error, please contact administration";
+    private static final String ACCOUNT_LOCKED = "Votre compte est blocqué, contatez l'administrateur !!!";
+    private static final String METHOD_IS_NOT_ALLOWED = "Ce point d'entrée n'existe pas. Envoyez une '%s' request";
+    private static final String INCORRECT_CREDENTIALS = "login ou mot de passe incorrect. SVP Réessayez !!!";
+    private static final String ACCOUNT_DISABLED = "Votre compte est desactivé, contatez l'administrateur !!!";
     private static final String ERROR_PROCESSING_FILE = "Error occurred while processing file";
-    private static final String NOT_ENOUGH_PERMISSION = "You do not have enough permission";
+    private static final String NOT_ENOUGH_PERMISSION = "Vous n'avez les droits pour atteidre la ressource souhaité";
     public static final String ERROR_PATH= "/error";
 
     @ExceptionHandler(DisabledException.class)
@@ -67,7 +66,6 @@ public class ExceptionHandling  implements ErrorController {
     public ResponseEntity<HttpResponse> usernameExistException(UsernameExistException exception) {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
-
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity<HttpResponse> emailNotFoundException(EmailNotFoundException exception) {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
@@ -80,6 +78,10 @@ public class ExceptionHandling  implements ErrorController {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<HttpResponse> urlNotfoundException(NoHandlerFoundException e) {
         return createHttpResponse(BAD_REQUEST, "This page was not found");
+    }
+    @ExceptionHandler(InvalidNoteException.class)
+    public ResponseEntity<HttpResponse> invalidNoteException(InvalidNoteException invalidNoteException) {
+        return createHttpResponse(BAD_REQUEST, invalidNoteException.getMessage());
     }
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<HttpResponse> methodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
@@ -105,14 +107,14 @@ public class ExceptionHandling  implements ErrorController {
         return createHttpResponse(NOT_FOUND, exception.getMessage());
     }
 
-    @RequestMapping(ERROR_PATH)
-    public ResponseEntity<HttpResponse> notFounf404() {
-        return createHttpResponse(NOT_FOUND,"There is no mapping for this URL");
-    }
+//    @RequestMapping(ERROR_PATH)
+//    public ResponseEntity<HttpResponse> notFounf404() {
+//        return createHttpResponse(NOT_FOUND,"There is no mapping for this URL");
+//    }
     @ExceptionHandler(IOException.class)
     public ResponseEntity<HttpResponse> iOException(IOException exception) {
         LOGGER.error(exception.getMessage());
-        return createHttpResponse(INTERNAL_SERVER_ERROR, ERROR_PROCESSING_FILE);
+        return createHttpResponse(INTERNAL_SERVER_ERROR, exception.getMessage());
     }
 
 

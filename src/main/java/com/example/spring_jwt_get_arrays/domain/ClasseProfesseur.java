@@ -10,7 +10,7 @@ public class ClasseProfesseur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String annee_scolaire;
+    private String anneeScolaire;
     @ManyToOne
     private Classe classe;
     @ManyToOne
@@ -19,9 +19,9 @@ public class ClasseProfesseur {
     public ClasseProfesseur() {
     }
 
-    public ClasseProfesseur(Long id, String annee_scolaire, Classe classe, Professeur professeur) {
+    public ClasseProfesseur(Long id, String anneeScolaire, Classe classe, Professeur professeur) {
         this.id = id;
-        this.annee_scolaire = annee_scolaire;
+        this.anneeScolaire = anneeScolaire;
         this.classe = classe;
         this.professeur = professeur;
     }
@@ -34,12 +34,12 @@ public class ClasseProfesseur {
         this.id = id;
     }
 
-    public String getAnnee_scolaire() {
-        return annee_scolaire;
+    public String getAnneeScolaire() {
+        return anneeScolaire;
     }
 
-    public void setAnnee_scolaire(String annee_scolaire) {
-        this.annee_scolaire = annee_scolaire;
+    public void setAnneeScolaire(String anneeScolaire) {
+        this.anneeScolaire = anneeScolaire;
     }
 
     public Classe getClasse() {

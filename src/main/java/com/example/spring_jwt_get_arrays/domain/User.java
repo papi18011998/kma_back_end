@@ -72,7 +72,7 @@ public class User {
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom = nom.toUpperCase().trim();
     }
 
     public String getUserName() {

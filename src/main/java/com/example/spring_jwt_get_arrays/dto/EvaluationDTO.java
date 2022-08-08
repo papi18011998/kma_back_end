@@ -10,13 +10,13 @@ public class EvaluationDTO {
     private Long id;
     private double note;
     private Date date_evaluation;
-    private Matiere matiere;
-    private Eleve eleve;
+    private MatiereDTO matiere;
+    private EleveDTO eleve;
 
     public EvaluationDTO() {
     }
 
-    public EvaluationDTO(Long id, double note, Date date_evaluation, Matiere matiere, Eleve eleve) {
+    public EvaluationDTO(Long id, double note, Date date_evaluation, MatiereDTO matiere, EleveDTO eleve) {
         this.id = id;
         this.note = note;
         this.date_evaluation = date_evaluation;
@@ -48,19 +48,19 @@ public class EvaluationDTO {
         this.date_evaluation = date_evaluation;
     }
 
-    public Matiere getMatiere() {
+    public MatiereDTO getMatiere() {
         return matiere;
     }
 
-    public void setMatiere(Matiere matiere) {
+    public void setMatiere(MatiereDTO matiere) {
         this.matiere = matiere;
     }
 
-    public Eleve getEleve() {
+    public EleveDTO getEleve() {
         return eleve;
     }
 
-    public void setEleve(Eleve eleve) {
+    public void setEleve(EleveDTO eleve) {
         this.eleve = eleve;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.spring_jwt_get_arrays.ressources;
 
+import com.example.spring_jwt_get_arrays.dto.UtilisateurDTO;
+import com.example.spring_jwt_get_arrays.mappers.KmaMapper;
 import com.example.spring_jwt_get_arrays.ressources.formModels.UserForm;
 import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
@@ -26,20 +28,23 @@ import static com.example.spring_jwt_get_arrays.constant.SecurityConstant.JWT_TO
 public class UserRessource extends ExceptionHandling {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    public final KmaMapper mapper;
     private final JWTTokenProvider jwtTokenProvider;
 
-    public UserRessource(UserService userService, AuthenticationManager authenticationManager, JWTTokenProvider jwtTokenProvider) {
+    public UserRessource(UserService userService, AuthenticationManager authenticationManager, KmaMapper mapper, JWTTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.mapper = mapper;
         this.jwtTokenProvider = jwtTokenProvider;
     }
     @PostMapping("login")
-    public ResponseEntity<User> login(@RequestBody User user) {
+    public ResponseEntity<UtilisateurDTO> login(@RequestBody User user) {
         authenticate(user.getUserName(),user.getPassword());
         User loginUser = userService.findUserByUsername(user.getUserName());
+        UtilisateurDTO loginUtilisateurDTO = mapper.utilisateur_to_utilisateurDTO(loginUser);
         UserPrincipal userPrincipal = new UserPrincipal(loginUser);
         HttpHeaders jwtHeaders = getJwtHeaders(userPrincipal);
-        return  new ResponseEntity<>(loginUser,jwtHeaders,HttpStatus.OK);
+        return  new ResponseEntity<>(loginUtilisateurDTO,jwtHeaders,HttpStatus.OK);
 
     }
 
@@ -62,5 +67,29 @@ public class UserRessource extends ExceptionHandling {
     @GetMapping()
     public List<User> getUsers(){
         return userService.getUsers();
+    }
+    @GetMapping(path = "/username/{username}")
+    public UtilisateurDTO findByLogin(@PathVariable(name = "username") String username){
+        User foundUser = userService.findUserByUsername(username);
+        return mapper.utilisateur_to_utilisateurDTO(foundUser);
+    }
+    @GetMapping(path = "/telephone/{telephone}")
+    public  UtilisateurDTO findByTelephone(@PathVariable(name = "telephone") String telephone){
+        UtilisateurDTO foundUser = userService.findByTelephone(telephone);
+        return foundUser;
+    }
+
+    @GetMapping("{id}")
+    public UtilisateurDTO getUser(@PathVariable Long id) throws UserNotFoundException {
+        return  userService.getUser(id);
+    }
+
+    @PutMapping("/status/{id}")
+    public UtilisateurDTO change_status(@PathVariable Long id) throws UserNotFoundException {
+        return userService.change_status(id);
+    }
+    @PutMapping("/{id}")
+    public UtilisateurDTO update_profile(@PathVariable Long id, @RequestBody UtilisateurDTO utilisateurDTO){
+        return userService.update_profile(id, utilisateurDTO);
     }
 }

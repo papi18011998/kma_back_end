@@ -5,8 +5,10 @@ import static com.example.spring_jwt_get_arrays.constant.UserImplConstant.*;
 import com.example.spring_jwt_get_arrays.domain.Genre;
 import com.example.spring_jwt_get_arrays.domain.User;
 import com.example.spring_jwt_get_arrays.domain.UserPrincipal;
+import com.example.spring_jwt_get_arrays.dto.UtilisateurDTO;
 import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.exception.domain.UsernameExistException;
+import com.example.spring_jwt_get_arrays.mappers.KmaMapper;
 import com.example.spring_jwt_get_arrays.repository.GenreRepository;
 import com.example.spring_jwt_get_arrays.repository.UserRepository;
 import com.example.spring_jwt_get_arrays.service.LoginAttempsService;
@@ -21,7 +23,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
 import javax.transaction.TransactionScoped;
@@ -35,12 +36,14 @@ import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_ELEVE;
 @Qualifier("UserDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private final KmaMapper mapper;
     private final UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private LoginAttempsService loginAttempsService;
     private final GenreRepository genreRepository;
 
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttempsService loginAttempsService, GenreRepository genreRepository) {
+    public UserServiceImpl(KmaMapper mapper, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttempsService loginAttempsService, GenreRepository genreRepository) {
+        this.mapper = mapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.loginAttempsService = loginAttempsService;
@@ -133,6 +136,47 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public UtilisateurDTO getUser(Long id) throws UserNotFoundException {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null){
+            throw  new UserNotFoundException(USER_NOT_FOUND_BY_ID);
+        }else {
+            return mapper.utilisateur_to_utilisateurDTO(user);
+        }
+    }
+
+    @Override
+    public UtilisateurDTO change_status(Long id) throws UserNotFoundException {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null){
+            throw  new UserNotFoundException(USER_NOT_FOUND_BY_ID);
+        }else {
+            user.setActive(!user.isActive());
+            userRepository.save(user);
+            return mapper.utilisateur_to_utilisateurDTO(user);
+        }
+    }
+
+    @Override
+    public UtilisateurDTO update_profile(Long id, UtilisateurDTO utilisateurDTO) {
+        User utilisateur = userRepository.findById(id).orElse(null);
+        if(utilisateur!=null){
+            utilisateur.setAdresse(utilisateurDTO.getAdresse());
+            utilisateur.setNom(utilisateurDTO.getNom());
+            utilisateur.setPrenom(utilisateurDTO.getPrenom());
+            utilisateur.setPassword(utilisateurDTO.getPassword());
+            userRepository.save(utilisateur);
+        }
+        return mapper.utilisateur_to_utilisateurDTO(utilisateur);
+    }
+
+    @Override
+    public UtilisateurDTO findByTelephone(String telephone) {
+        User utilisateur = userRepository.findByTelephone(telephone).orElse(null);
+        return (utilisateur==null)?null:mapper.utilisateur_to_utilisateurDTO(utilisateur);
     }
 
     @Override

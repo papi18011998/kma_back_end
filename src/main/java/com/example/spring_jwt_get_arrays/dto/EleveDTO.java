@@ -13,8 +13,8 @@ public class EleveDTO extends  UtilisateurDTO{
         super();
     }
 
-    public EleveDTO(Long id, String prenom, String nom, String login, String adresse, Boolean is_active, String password, Genre genre, String telephone, String matricule, Date date_naissance) {
-        super(id, prenom, nom, login, adresse, is_active, password, genre, telephone);
+    public EleveDTO(Long id, String prenom, String nom, String userName, String password, String adresse, Date joinDate, String role, String[] authorities, boolean isActive, boolean isNotLocked, String telephone, Genre genre, String matricule, Date date_naissance) {
+        super(id, prenom, nom, userName, password, adresse, joinDate, role, authorities, isActive, isNotLocked, telephone, genre);
         this.matricule = matricule;
         this.date_naissance = date_naissance;
     }

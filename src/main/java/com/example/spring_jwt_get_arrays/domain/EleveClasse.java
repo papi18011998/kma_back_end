@@ -8,7 +8,7 @@ public class EleveClasse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
-    private String annee_scolaire;
+    private String anneeScolaire;
     @ManyToOne
     private Eleve eleve;
     @ManyToOne
@@ -17,9 +17,9 @@ public class EleveClasse {
     public EleveClasse() {
     }
 
-    public EleveClasse(Long id, String annee_scolaire, Eleve eleve, Classe classe) {
+    public EleveClasse(Long id, String anneeScolaire, Eleve eleve, Classe classe) {
         this.id = id;
-        this.annee_scolaire = annee_scolaire;
+        this.anneeScolaire = anneeScolaire;
         this.eleve = eleve;
         this.classe = classe;
     }
@@ -32,12 +32,12 @@ public class EleveClasse {
         this.id = id;
     }
 
-    public String getAnnee_scolaire() {
-        return annee_scolaire;
+    public String getAnneeScolaire() {
+        return anneeScolaire;
     }
 
-    public void setAnnee_scolaire(String annee_scolaire) {
-        this.annee_scolaire = annee_scolaire;
+    public void setAnneeScolaire(String anneeScolaire) {
+        this.anneeScolaire = anneeScolaire;
     }
 
     public Eleve getEleve() {

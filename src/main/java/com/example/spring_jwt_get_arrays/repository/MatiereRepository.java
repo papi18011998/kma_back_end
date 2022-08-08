@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@Repository
+@RepositoryRestResource
 @CrossOrigin("*")
 public interface MatiereRepository extends JpaRepository<Matiere,Long> {
 }
