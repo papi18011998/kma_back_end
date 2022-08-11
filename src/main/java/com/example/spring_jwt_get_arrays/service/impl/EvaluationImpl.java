@@ -11,6 +11,7 @@ import com.example.spring_jwt_get_arrays.service.IEvaluation;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class EvaluationImpl implements IEvaluation {
@@ -30,5 +31,10 @@ public class EvaluationImpl implements IEvaluation {
         Evaluation evaluation = new Evaluation(null,note,new Date(),matiere,eleve);
         evaluationRepository.save(evaluation);
         return mapper.evaluation_to_evaluationDTO(evaluation);
+    }
+
+    @Override
+    public long getMostFrequentScore() {
+        return evaluationRepository.getMostFrequentScore();
     }
 }

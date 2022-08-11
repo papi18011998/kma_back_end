@@ -12,6 +12,8 @@ import com.example.spring_jwt_get_arrays.ressources.formModels.EvaluationForm;
 import com.example.spring_jwt_get_arrays.service.IEvaluation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin("*")
@@ -31,5 +33,9 @@ public class EvaluationController{
         Eleve eleve = eleveRepository.findById(evaluationForm.getIdEleve()).orElse(null);
         Matiere matiereOfProfesseur = professeur.getMatiere();
         return  iEvaluation.addEvaluation(evaluationForm.getNote(),matiereOfProfesseur,eleve);
+    }
+    @GetMapping("evaluations/mostfrequent")
+    public long getMostFrequentNote(){
+        return iEvaluation.getMostFrequentScore();
     }
 }
