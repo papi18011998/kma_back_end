@@ -10,4 +10,5 @@ import java.util.List;
 public interface IEleve {
     public Eleve addEleve(Eleve eleve);
     public List<EleveDTO> getEleves();
+    public long countAll();
 }

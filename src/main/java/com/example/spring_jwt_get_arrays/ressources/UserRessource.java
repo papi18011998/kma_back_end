@@ -25,6 +25,7 @@ import static com.example.spring_jwt_get_arrays.constant.SecurityConstant.JWT_TO
 
 @RestController
 @RequestMapping("users")
+@CrossOrigin("*")
 public class UserRessource extends ExceptionHandling {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;

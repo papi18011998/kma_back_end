@@ -6,6 +6,7 @@ import com.example.spring_jwt_get_arrays.domain.ClasseProfesseur;
 import com.example.spring_jwt_get_arrays.domain.Professeur;
 import com.example.spring_jwt_get_arrays.dto.ClasseDTO;
 import com.example.spring_jwt_get_arrays.dto.ProfesseurDTO;
+import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.mappers.KmaMapper;
 import com.example.spring_jwt_get_arrays.repository.ClasseProfesseurRepository;
 import com.example.spring_jwt_get_arrays.repository.ClasseRepository;
@@ -75,6 +76,15 @@ public class ProfesseurImpl implements IProfesseur, UserDetailsService {
             classeDTOS.add(mapper.classe_to_classeDTO(classe));
         });
         return classeDTOS;
+    }
+
+    @Override
+    public ProfesseurDTO getProfesseur(long id) throws UserNotFoundException {
+        Professeur professeur = professeurRepository.findById(id).orElse(null);
+        if(professeur == null){
+            throw  new UserNotFoundException("Professeur non trouvé !!!");
+        }
+        return mapper.professeur_to_professeurDTO(professeur);
     }
 
     @Override

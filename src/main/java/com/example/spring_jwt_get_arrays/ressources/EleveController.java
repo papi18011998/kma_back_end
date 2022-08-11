@@ -123,4 +123,8 @@ public class EleveController extends ExceptionHandling {
             return eleveRepository.findById(eleve.getId()).orElse(null);
         }
     }
+    @GetMapping("eleves/count")
+    public long getCountEleves(){
+        return ieleve.countAll();
+    }
 }

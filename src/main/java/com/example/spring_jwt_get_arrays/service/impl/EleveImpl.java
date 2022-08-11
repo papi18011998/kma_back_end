@@ -35,6 +35,11 @@ public class EleveImpl implements IEleve, UserDetailsService {
     }
 
     @Override
+    public long countAll() {
+        return eleveRepository.count();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }

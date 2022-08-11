@@ -7,6 +7,7 @@ import com.example.spring_jwt_get_arrays.domain.Professeur;
 import com.example.spring_jwt_get_arrays.dto.ClasseDTO;
 import com.example.spring_jwt_get_arrays.dto.ProfesseurDTO;
 import com.example.spring_jwt_get_arrays.exception.domain.ExceptionHandling;
+import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.mappers.KmaMapper;
 import com.example.spring_jwt_get_arrays.repository.ClasseProfesseurRepository;
 import com.example.spring_jwt_get_arrays.repository.ClasseRepository;
@@ -80,5 +81,9 @@ public class ProfesseurController extends ExceptionHandling {
                                                    @PathVariable String annee_scolaire){
         Professeur professeur = professeurRepository.findById(id).orElse(null);
         return iProfesseur.findByProfesseurAndAnneeScolaire(professeur,annee_scolaire);
+    }
+    @GetMapping("professeurs/{id}")
+    public ProfesseurDTO getProfesseur(@PathVariable long id) throws UserNotFoundException {
+        return iProfesseur.getProfesseur(id);
     }
 }
