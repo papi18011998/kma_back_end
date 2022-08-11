@@ -37,4 +37,9 @@ public class EvaluationImpl implements IEvaluation {
     public long getMostFrequentScore() {
         return evaluationRepository.getMostFrequentScore();
     }
+
+    @Override
+    public long getAverageByClasse() {
+        return evaluationRepository.getAverageByClasse();
+    }
 }

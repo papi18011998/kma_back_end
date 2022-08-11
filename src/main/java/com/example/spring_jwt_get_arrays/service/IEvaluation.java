@@ -10,4 +10,5 @@ import java.util.List;
 public interface IEvaluation {
 public EvaluationDTO addEvaluation(double note, Matiere matiere, Eleve eleve) throws InvalidNoteException;
 public long getMostFrequentScore();
+public long getAverageByClasse();
 }

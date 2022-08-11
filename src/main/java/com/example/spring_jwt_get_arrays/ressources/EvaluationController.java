@@ -38,4 +38,8 @@ public class EvaluationController{
     public long getMostFrequentNote(){
         return iEvaluation.getMostFrequentScore();
     }
+    @GetMapping("evaluations/avg")
+    public long getAverageByClasse(){
+        return iEvaluation.getAverageByClasse();
+    }
 }
