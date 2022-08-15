@@ -2,8 +2,12 @@ package com.example.spring_jwt_get_arrays.mappers;
 
 import com.example.spring_jwt_get_arrays.domain.*;
 import com.example.spring_jwt_get_arrays.dto.*;
+import com.example.spring_jwt_get_arrays.repository.EleveRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class KmaMapper {
@@ -23,12 +27,24 @@ public class KmaMapper {
     public Eleve eleveDTO_to_eleve(EleveDTO eleveDTO){
         Eleve eleve = new Eleve();
         BeanUtils.copyProperties(eleveDTO,eleve);
+        eleve.setParent(parentDTO_to_parent(eleveDTO.getParent()));
+        Collection<Evaluation> evaluations = new ArrayList<>();
+        eleveDTO.getEvaluations().forEach(evaluationDTO -> {
+            evaluations.add(evaluationDTO_to_evaluation(evaluationDTO));
+        });
+        eleve.setEvaluations(evaluations);
         return eleve;
     }
 
     public EleveDTO eleve_to_eleveDTO(Eleve eleve){
         EleveDTO eleveDTO = new EleveDTO();
         BeanUtils.copyProperties(eleve,eleveDTO);
+        eleveDTO.setParent(parent_to_parentDTO(eleve.getParent()));
+        Collection<EvaluationDTO> evaluationDTOS = new ArrayList<>();
+        eleve.getEvaluations().forEach(evaluation -> {
+            evaluationDTOS.add(evaluation_to_evaluationDTO(evaluation));
+        });
+        eleveDTO.setEvaluations(evaluationDTOS);
         return eleveDTO;
     }
 
@@ -98,7 +114,7 @@ public class KmaMapper {
         Evaluation evaluation = new Evaluation();
         BeanUtils.copyProperties(evaluationDTO,evaluation);
         evaluation.setMatiere(matiereDTO_to_matiere(evaluationDTO.getMatiere()));
-        evaluation.setEleve(eleveDTO_to_eleve(evaluationDTO.getEleve()));
+//        evaluation.setEleve(eleveDTO_to_eleve(evaluationDTO.getEleve()));
         return evaluation;
      }
 
@@ -106,7 +122,7 @@ public class KmaMapper {
         EvaluationDTO evaluationDTO = new EvaluationDTO();
         BeanUtils.copyProperties(evaluation,evaluationDTO);
         evaluationDTO.setMatiere(matiere_to_matiereDTO(evaluation.getMatiere()));
-        evaluationDTO.setEleve(eleve_to_eleveDTO(evaluation.getEleve()));
+//        evaluationDTO.setEleve(eleve_to_eleveDTO(evaluation.getEleve()));
         return evaluationDTO;
      }
 

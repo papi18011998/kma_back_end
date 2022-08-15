@@ -2,6 +2,7 @@ package com.example.spring_jwt_get_arrays.service.impl;
 
 import com.example.spring_jwt_get_arrays.domain.Eleve;
 import com.example.spring_jwt_get_arrays.dto.EleveDTO;
+import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.mappers.KmaMapper;
 import com.example.spring_jwt_get_arrays.repository.EleveRepository;
 import com.example.spring_jwt_get_arrays.service.IEleve;
@@ -42,6 +43,15 @@ public class EleveImpl implements IEleve, UserDetailsService {
     @Override
     public List<String> getTopfiveScore() {
         return eleveRepository.getTopfiveScore();
+    }
+
+    @Override
+    public EleveDTO getEleve(long id) throws UserNotFoundException {
+        Eleve eleve = eleveRepository.findById(id).orElse(null);
+        if(eleve == null){
+            throw new UserNotFoundException("Eleve non trouvé avec l'id " + id);
+        }
+        return  mapper.eleve_to_eleveDTO(eleve);
     }
 
     @Override

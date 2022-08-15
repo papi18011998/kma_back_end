@@ -2,6 +2,8 @@ package com.example.spring_jwt_get_arrays.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
@@ -16,6 +18,7 @@ public class Eleve extends User{
     @ManyToOne
     private  Parent parent;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "eleve")
     private List<EleveClasse> annees;
 

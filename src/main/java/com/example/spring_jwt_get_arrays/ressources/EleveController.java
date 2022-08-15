@@ -3,6 +3,7 @@ package com.example.spring_jwt_get_arrays.ressources;
 import com.example.spring_jwt_get_arrays.domain.*;
 import com.example.spring_jwt_get_arrays.dto.EleveDTO;
 import com.example.spring_jwt_get_arrays.exception.domain.ExceptionHandling;
+import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.repository.*;
 import com.example.spring_jwt_get_arrays.ressources.formModels.EleveForm;
 import com.example.spring_jwt_get_arrays.service.IEleve;
@@ -130,5 +131,9 @@ public class EleveController extends ExceptionHandling {
     @GetMapping("eleves/top")
     public List<String>getTopFive(){
         return ieleve.getTopfiveScore();
+    }
+    @GetMapping("eleves/{id}")
+    public EleveDTO getEleve(@PathVariable long id) throws UserNotFoundException {
+        return ieleve.getEleve(id);
     }
 }

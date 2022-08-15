@@ -3,6 +3,7 @@ package com.example.spring_jwt_get_arrays.dto;
 
 import com.example.spring_jwt_get_arrays.domain.Eleve;
 import com.example.spring_jwt_get_arrays.domain.Matiere;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public class EvaluationDTO {
     private double note;
     private Date date_evaluation;
     private MatiereDTO matiere;
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     private EleveDTO eleve;
 
     public EvaluationDTO() {
