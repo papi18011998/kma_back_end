@@ -127,4 +127,8 @@ public class EleveController extends ExceptionHandling {
     public long getCountEleves(){
         return ieleve.countAll();
     }
+    @GetMapping("eleves/top")
+    public List<String>getTopFive(){
+        return ieleve.getTopfiveScore();
+    }
 }

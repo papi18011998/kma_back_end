@@ -12,7 +12,9 @@ import com.example.spring_jwt_get_arrays.service.impl.EleveClasseImpl;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -41,5 +43,9 @@ public class ClasseController {
     public List<EleveDTO> findByClasseAndAnnee_scolaire(@PathVariable long id, @PathVariable String annee_scolaire){
         Classe classe = classeRepository.findById(id).orElse(null);
         return eleveClasse.findByClasseAndAnnee_scolaire(classe,annee_scolaire);
+    }
+    @GetMapping("classes/counteleves")
+    public List<String> getElevesByClasse(){
+        return eleveClasseRepository.getElevesByClasse();
     }
 }

@@ -40,6 +40,11 @@ public class EleveImpl implements IEleve, UserDetailsService {
     }
 
     @Override
+    public List<String> getTopfiveScore() {
+        return eleveRepository.getTopfiveScore();
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
