@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,10 +22,19 @@ import java.util.stream.Stream;
 import static com.example.spring_jwt_get_arrays.enumeration.Role.*;
 
 @SpringBootApplication
-public class SpringJwtGetArraysApplication {
+public class SpringJwtGetArraysApplication implements  CommandLineRunner{
+    private final RepositoryRestConfiguration restConfiguration;
+
+    public SpringJwtGetArraysApplication(RepositoryRestConfiguration restConfiguration) {
+        this.restConfiguration = restConfiguration;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(SpringJwtGetArraysApplication.class, args);
+    }
+    @Override
+    public void run(String... args) throws Exception {
+        restConfiguration.exposeIdsFor(Eleve.class);
     }
 //    @Bean
     public CommandLineRunner runner(GenreRepository genreRepository,

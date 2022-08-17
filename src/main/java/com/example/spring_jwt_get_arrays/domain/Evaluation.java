@@ -2,6 +2,8 @@ package com.example.spring_jwt_get_arrays.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 @Entity
@@ -14,6 +16,7 @@ public class Evaluation {
     private Date date_evaluation;
     @ManyToOne
     private Matiere matiere;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     private Eleve eleve;
 

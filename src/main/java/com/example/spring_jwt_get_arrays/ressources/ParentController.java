@@ -1,22 +1,22 @@
 package com.example.spring_jwt_get_arrays.ressources;
 
-import com.example.spring_jwt_get_arrays.domain.Classe;
-import com.example.spring_jwt_get_arrays.domain.Eleve;
-import com.example.spring_jwt_get_arrays.domain.EleveClasse;
-import com.example.spring_jwt_get_arrays.domain.Parent;
+import com.example.spring_jwt_get_arrays.domain.*;
 import com.example.spring_jwt_get_arrays.dto.ParentDTO;
 import com.example.spring_jwt_get_arrays.exception.domain.ExceptionHandling;
+import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.repository.*;
 import com.example.spring_jwt_get_arrays.ressources.formModels.ParentForm;
 import com.example.spring_jwt_get_arrays.service.IParent;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -102,5 +102,16 @@ public class ParentController extends ExceptionHandling {
         eleveClasseRepository.save(eleveClasse);
         return parentRepository.findById(id).orElse(null);
     }
-
+    @GetMapping("parents/{id}/counteleves")
+    public long getElevesByParent(@PathVariable long id) throws UserNotFoundException {
+        return iParent.countElevesByParent(id);
+    }
+    @GetMapping("parents/{id}/eleves/maxscore")
+    public String getMostFrequentScore(@PathVariable long id){
+        return iParent.getMostFrequentScore(id);
+    }
+    @GetMapping("parents/{idParent}/eleves/{idEleve}/evaluations")
+    public Collection<Evaluation> getEvaluations(@PathVariable long idParent, @PathVariable long idEleve) throws UserNotFoundException {
+        return iParent.getEvaluationsEleves(idEleve);
+    }
 }
