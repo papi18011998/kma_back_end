@@ -41,6 +41,7 @@ public class ExceptionHandling  implements ErrorController {
     public ResponseEntity<HttpResponse> accountDisabledException(){
         return  createHttpResponse(BAD_REQUEST, ACCOUNT_DISABLED);
     }
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<HttpResponse> badCredentialsException(){
         return createHttpResponse(BAD_REQUEST, INCORRECT_CREDENTIALS);
@@ -77,7 +78,11 @@ public class ExceptionHandling  implements ErrorController {
     }
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<HttpResponse> urlNotfoundException(NoHandlerFoundException e) {
-        return createHttpResponse(BAD_REQUEST, "This page was not found");
+        return createHttpResponse(BAD_REQUEST, "Cette page est introuvable !!!");
+    }
+    @ExceptionHandler(ClasseAlreadyExistException.class)
+    public ResponseEntity<HttpResponse> classeAlreadyExistException(ClasseAlreadyExistException invalidNoteException) {
+        return createHttpResponse(BAD_REQUEST, invalidNoteException.getMessage());
     }
     @ExceptionHandler(InvalidNoteException.class)
     public ResponseEntity<HttpResponse> invalidNoteException(InvalidNoteException invalidNoteException) {

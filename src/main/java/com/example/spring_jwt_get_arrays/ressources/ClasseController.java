@@ -2,9 +2,10 @@ package com.example.spring_jwt_get_arrays.ressources;
 
 
 import com.example.spring_jwt_get_arrays.domain.Classe;
-import com.example.spring_jwt_get_arrays.domain.EleveClasse;
 import com.example.spring_jwt_get_arrays.dto.ClasseDTO;
 import com.example.spring_jwt_get_arrays.dto.EleveDTO;
+import com.example.spring_jwt_get_arrays.exception.domain.ClasseAlreadyExistException;
+import com.example.spring_jwt_get_arrays.exception.domain.ExceptionHandling;
 import com.example.spring_jwt_get_arrays.repository.ClasseRepository;
 import com.example.spring_jwt_get_arrays.repository.EleveClasseRepository;
 import com.example.spring_jwt_get_arrays.service.IClasse;
@@ -12,13 +13,11 @@ import com.example.spring_jwt_get_arrays.service.impl.EleveClasseImpl;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-public class ClasseController {
+public class ClasseController extends ExceptionHandling {
     private final IClasse classe;
     private final ClasseRepository classeRepository;
     private final EleveClasseRepository eleveClasseRepository;
@@ -36,7 +35,7 @@ public class ClasseController {
         return classe.getClasses();
     }
     @PostMapping(path ="/classes")
-    public ClasseDTO addClasse(@RequestBody ClasseDTO classeDTO){
+    public ClasseDTO addClasse(@RequestBody ClasseDTO classeDTO) throws ClasseAlreadyExistException {
         return classe.addClasse(classeDTO);
     }
     @GetMapping("classes/{id}/{annee_scolaire}")

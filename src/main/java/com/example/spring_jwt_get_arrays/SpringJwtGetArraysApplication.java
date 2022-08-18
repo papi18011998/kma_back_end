@@ -36,7 +36,7 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
     public void run(String... args) throws Exception {
         restConfiguration.exposeIdsFor(Eleve.class);
     }
-//    @Bean
+    @Bean
     public CommandLineRunner runner(GenreRepository genreRepository,
                                     ClasseRepository classeRepository,
                                     MatiereRepository matiereRepository,
@@ -59,7 +59,7 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
             });
 
             //faker de classes
-            Stream.of("CI A","CI B","CI C","CP A","CP B","CP C","CE1","CE2","CM1","CM2","6eme A","5eme","4eme","2eme S2B","1ere","TS2 D").forEach(libelle->{
+            Stream.of("CIA","CIB","CIC","CPA","CPB","CPC","CE1","CE2","CM1","CM2","6emeA","5eme","4eme","2eme S2B","1ere","TS2D").forEach(libelle->{
                 Classe classe = new Classe();
                 classe.setLibelle(libelle);
                 classeRepository.save(classe);
