@@ -36,7 +36,7 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
     public void run(String... args) throws Exception {
         restConfiguration.exposeIdsFor(Eleve.class);
     }
-    @Bean
+//    @Bean
     public CommandLineRunner runner(GenreRepository genreRepository,
                                     ClasseRepository classeRepository,
                                     MatiereRepository matiereRepository,

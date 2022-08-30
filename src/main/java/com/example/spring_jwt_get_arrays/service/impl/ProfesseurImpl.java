@@ -18,9 +18,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_ELEVE;
 import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_PROFESSEUR;
 
 @Service
@@ -46,6 +48,12 @@ public class ProfesseurImpl implements IProfesseur, UserDetailsService {
     @Override
     public ProfesseurDTO addProfesseur(ProfesseurDTO professeurDTO) {
         Professeur professeur = mapper.professeurDTO_to_professeur(professeurDTO);
+        professeur.setDate_prise_fonction(new Date());
+        professeur.setJoinDate(new Date());
+        professeur.setActive(true);
+        professeur.setNotLocked(true);
+        professeur.setRole(ROLE_PROFESSEUR.name());
+        professeur.setAuthorities(ROLE_PROFESSEUR.getAuthorities());
         professeurRepository.save(professeur);
         return  mapper.professeur_to_professeurDTO(professeur);
     }

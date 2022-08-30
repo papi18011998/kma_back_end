@@ -37,9 +37,9 @@ public class AdminRestController extends ExceptionHandling {
 
     @PostMapping(path = "/administrateurs")
     public AdministrateurDTO saveAdmin(@RequestBody AdministrateurDTO administrateurDTO){
-        String password = faker.internet().password();
-        LOGGER.info("Le mot de passe de l'utilisateur est"+password);
-        administrateurDTO.setPassword(passwordEncoder.encode(password));
+//        String password = faker.internet().password();
+//        LOGGER.info("Le mot de passe de l'utilisateur est"+password);
+//        administrateurDTO.setPassword(passwordEncoder.encode(password));
         return iAdministrateur.saveAdmin(administrateurDTO);
     }
 }
