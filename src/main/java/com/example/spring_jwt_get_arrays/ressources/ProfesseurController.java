@@ -14,8 +14,10 @@ import com.example.spring_jwt_get_arrays.repository.ClasseRepository;
 import com.example.spring_jwt_get_arrays.repository.ProfesseurRepository;
 import com.example.spring_jwt_get_arrays.ressources.formModels.ProfesseurForm;
 import com.example.spring_jwt_get_arrays.service.IProfesseur;
+import com.example.spring_jwt_get_arrays.utility.SmsSender;
 import com.github.javafaker.Faker;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +30,18 @@ import java.util.List;
 @CrossOrigin("*")
 public class ProfesseurController extends ExceptionHandling {
     private final IProfesseur iProfesseur;
+    private final SmsSender smsSender;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final ClasseRepository classeRepository;
     private final ProfesseurRepository professeurRepository;
     private final KmaMapper mapper;
     private final Faker faker;
     private final ClasseProfesseurRepository classeProfesseurRepository;
 
-    public ProfesseurController(IProfesseur iProfesseur, ClasseRepository classeRepository, ProfesseurRepository professeurRepository, KmaMapper mapper, Faker faker, ClasseProfesseurRepository classeProfesseurRepository) {
+    public ProfesseurController(IProfesseur iProfesseur, SmsSender smsSender, BCryptPasswordEncoder passwordEncoder, ClasseRepository classeRepository, ProfesseurRepository professeurRepository, KmaMapper mapper, Faker faker, ClasseProfesseurRepository classeProfesseurRepository) {
         this.iProfesseur = iProfesseur;
+        this.smsSender = smsSender;
+        this.passwordEncoder = passwordEncoder;
         this.classeRepository = classeRepository;
         this.professeurRepository = professeurRepository;
         this.mapper = mapper;
@@ -48,7 +54,8 @@ public class ProfesseurController extends ExceptionHandling {
     }
     @PostMapping(path="professeurs")
     public  ProfesseurDTO addProfesseur(@RequestBody ProfesseurForm professeurForm){
-        professeurForm.getProfesseurDTO().setPassword(faker.internet().password());
+        String passwordProfresseur = faker.internet().password();
+        professeurForm.getProfesseurDTO().setPassword(passwordEncoder.encode(passwordProfresseur));
         long idNewProfesseur = iProfesseur.addProfesseur(professeurForm.getProfesseurDTO()).getId();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         professeurForm.getClasses().forEach(classeId->{
@@ -56,6 +63,9 @@ public class ProfesseurController extends ExceptionHandling {
             ClasseProfesseur annee = new ClasseProfesseur(null,year-1+"-"+year,classe,professeurRepository.findById(idNewProfesseur).orElse(null));
             classeProfesseurRepository.save(annee);
         });
+//        smsSender.sendSms("Bonjour,\n" +
+//                    "Suite à l'ajout du professeur"+ professeurForm.getProfesseurDTO().getPrenom()+
+//                    "Son Login est"+ professeurForm.getProfesseurDTO().getUserName() + "et son mot de passe: " + passwordProfresseur);
         return professeurForm.getProfesseurDTO();
     }
     @PutMapping("professeurs/{id}")

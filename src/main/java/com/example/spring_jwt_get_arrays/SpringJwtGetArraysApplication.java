@@ -2,6 +2,7 @@ package com.example.spring_jwt_get_arrays;
 
 import com.example.spring_jwt_get_arrays.domain.*;
 import com.example.spring_jwt_get_arrays.repository.*;
+import com.example.spring_jwt_get_arrays.utility.SmsSender;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -36,6 +37,13 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
     public void run(String... args) throws Exception {
         restConfiguration.exposeIdsFor(Eleve.class);
     }
+//    @Bean
+//    public CommandLineRunner sendSms(){
+//        return args -> {
+//            SmsSender sms = new SmsSender();
+//            sms.sendSms("Bonjour zero");
+//        };
+//    }
 //    @Bean
     public CommandLineRunner runner(GenreRepository genreRepository,
                                     ClasseRepository classeRepository,

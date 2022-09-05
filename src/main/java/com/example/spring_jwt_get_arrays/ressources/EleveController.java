@@ -7,6 +7,7 @@ import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.repository.*;
 import com.example.spring_jwt_get_arrays.ressources.formModels.EleveForm;
 import com.example.spring_jwt_get_arrays.service.IEleve;
+import com.example.spring_jwt_get_arrays.utility.SmsSender;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_PARENT;
 @CrossOrigin("*")
 public class EleveController extends ExceptionHandling {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private final SmsSender smsSender;
     private final IEleve ieleve;
     private final ClasseRepository classeRepository;
     private final EleveRepository eleveRepository;
@@ -36,7 +38,8 @@ public class EleveController extends ExceptionHandling {
     private final BCryptPasswordEncoder passwordEncoder;
     private final Faker faker;
 
-    public EleveController(IEleve ieleve, ClasseRepository classeRepository, EleveRepository eleveRepository, EleveClasseRepository eleveClasseRepository, ParentRepository parentRepository, GenreRepository genreRepository, BCryptPasswordEncoder passwordEncoder, Faker faker) {
+    public EleveController(SmsSender smsSender, IEleve ieleve, ClasseRepository classeRepository, EleveRepository eleveRepository, EleveClasseRepository eleveClasseRepository, ParentRepository parentRepository, GenreRepository genreRepository, BCryptPasswordEncoder passwordEncoder, Faker faker) {
+        this.smsSender = smsSender;
         this.ieleve = ieleve;
         this.classeRepository = classeRepository;
         this.eleveRepository = eleveRepository;
@@ -104,7 +107,11 @@ public class EleveController extends ExceptionHandling {
 
             EleveClasse eleveClasse = new EleveClasse(null,year-1+"-"+year,eleveRepository.findById(id).orElse(null),classe);
             eleveClasseRepository.save(eleveClasse);
-
+            // send SMS
+//            smsSender.sendSms("Bonjour,\n" +
+//                    "Suite à l'ajout de l'eleve"+ eleve.getPrenom()+
+//                    "Son Login est"+ eleve.getMatricule() + "et son mot de passe: " + passwordEleve+
+//                    ".\n Concernant le parent, login :"+ parent.getUserName() +" et mt de passe: "+passwordParent );
             return eleveRepository.findById(eleve.getId()).orElse(null);
         }else {
             // Parent exist
@@ -120,7 +127,9 @@ public class EleveController extends ExceptionHandling {
 
             EleveClasse eleveClasse = new EleveClasse(null,year-1+"-"+year,eleveRepository.findById(id).orElse(null),classe);
             eleveClasseRepository.save(eleveClasse);
-
+//            smsSender.sendSms("Bonjour,\n" +
+//                    "Suite à l'ajout de l'eleve"+ eleve.getPrenom()+
+//                    "Son Login est"+ eleve.getMatricule() + "et son mot de passe: " + passwordEleve);
             return eleveRepository.findById(eleve.getId()).orElse(null);
         }
     }

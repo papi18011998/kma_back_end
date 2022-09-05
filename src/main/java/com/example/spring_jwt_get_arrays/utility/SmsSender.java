@@ -4,7 +4,9 @@ import com.vonage.client.VonageClient;
 import com.vonage.client.sms.MessageStatus;
 import com.vonage.client.sms.SmsSubmissionResponse;
 import com.vonage.client.sms.messages.TextMessage;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SmsSender {
     private final String VONAGE_API_KEY = "106b64ad";
     private final String VONAGE_API_SECRET = "jx0zABCNkJD4Q90k";
@@ -13,7 +15,7 @@ public class SmsSender {
 
     public SmsSender() {}
     public void sendSms(String intitule){
-        TextMessage message = new TextMessage("Keur Maman Anthiou,Notification",
+        TextMessage message = new TextMessage("Vonage APIs",
                 "221776692537",
                 intitule
         );

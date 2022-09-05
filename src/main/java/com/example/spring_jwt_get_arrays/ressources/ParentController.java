@@ -7,10 +7,10 @@ import com.example.spring_jwt_get_arrays.exception.domain.UserNotFoundException;
 import com.example.spring_jwt_get_arrays.repository.*;
 import com.example.spring_jwt_get_arrays.ressources.formModels.ParentForm;
 import com.example.spring_jwt_get_arrays.service.IParent;
+import com.example.spring_jwt_get_arrays.utility.SmsSender;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +27,7 @@ import static com.example.spring_jwt_get_arrays.enumeration.Role.ROLE_PARENT;
 @CrossOrigin("*")
 public class ParentController extends ExceptionHandling {
     private final IParent iParent;
+    private final SmsSender smsSender;
     private final GenreRepository genreRepository;
     private final ParentRepository parentRepository;
     private final ClasseRepository classeRepository;
@@ -35,8 +36,9 @@ public class ParentController extends ExceptionHandling {
     private final BCryptPasswordEncoder passwordEncoder;
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     private final Faker faker;
-    public ParentController(IParent iParent, GenreRepository genreRepository, ParentRepository parentRepository, ClasseRepository classeRepository, EleveClasseRepository eleveClasseRepository, EleveRepository eleveRepository, BCryptPasswordEncoder passwordEncoder, Faker faker) {
+    public ParentController(IParent iParent, SmsSender smsSender, GenreRepository genreRepository, ParentRepository parentRepository, ClasseRepository classeRepository, EleveClasseRepository eleveClasseRepository, EleveRepository eleveRepository, BCryptPasswordEncoder passwordEncoder, Faker faker) {
         this.iParent = iParent;
+        this.smsSender = smsSender;
         this.genreRepository = genreRepository;
         this.parentRepository = parentRepository;
         this.classeRepository = classeRepository;
@@ -100,6 +102,11 @@ public class ParentController extends ExceptionHandling {
         // flush data
         eleveRepository.save(eleve);
         eleveClasseRepository.save(eleveClasse);
+        // send SMS
+//            smsSender.sendSms("Bonjour,\n" +
+//                    "Suite à l'ajout du parent"+ parent.getPrenom()+
+//                    "Son Login est"+ parent.getUserName() + "et son mot de passe: " + passwordParent+
+//                    ".\n Concernant l'eleve, login :"+ eleve.getUserName() +" et mot de passe: "+passworEleve );
         return parentRepository.findById(id).orElse(null);
     }
     @GetMapping("parents/{id}/counteleves")

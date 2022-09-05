@@ -56,8 +56,8 @@ public class AdministrateurImpl implements IAdministrateur, UserDetailsService {
         administrateur.setRole(ROLE_ADMIN.name());
         administrateur.setAuthorities(ROLE_ADMIN.getAuthorities());
         administrateurRepository.save(administrateur);
-        SmsSender smsSender = new SmsSender();
-//        smsSender.sendSms("Votre mot de passe est :"+ password);
+//        SmsSender smsSender = new SmsSender();
+//        smsSender.sendSms("Votre mot de passe est : "+ password+"\n");
         return mapper.admin_to_adminDTO(administrateur);
     }
 
