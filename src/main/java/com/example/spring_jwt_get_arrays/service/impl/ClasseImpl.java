@@ -38,7 +38,6 @@ public class ClasseImpl implements IClasse {
         if (classe != null){
             throw new ClasseAlreadyExistException("Cette classe existe déjà !!!");
         }
-//        classeRepository.save(mapper.classeDTO_to_classe(classeDTO));
-        return null;
+        return mapper.classe_to_classeDTO(classeRepository.save(mapper.classeDTO_to_classe(classeDTO)));
     }
 }

@@ -11,5 +11,5 @@ public class SecurityConstant {
     public static final String TOKEN_CANNOT_BE_VERIFIED = "Le jeton doit être vérifié";
     public static final String  ACCESS_DENIED_MESSAGE = "Vous n'avez pas les droits pour acceder à cette ressource";
     public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
-    public static final String[] PUBLIC_URLS = {"/users/login"};
+    public static final String[] PUBLIC_URLS = {"/users/login","/swagger-ui/**","/v3/api-docs/**"};
 }

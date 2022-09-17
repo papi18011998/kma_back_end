@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SmsSender {
+//    This 2 following credentials will be use if the first balance expires
+//    private final String VONAGE_API_KEY_2 ="042c66e3";
+//    private final String VONAGE_API_SECRET_2 ="P4ztQNS516y1KaLj";
     private final String VONAGE_API_KEY = "106b64ad";
     private final String VONAGE_API_SECRET = "jx0zABCNkJD4Q90k";
     private final  String VONAGE_BRAND_NAME = "Keur Maman Anthiou,Notification";

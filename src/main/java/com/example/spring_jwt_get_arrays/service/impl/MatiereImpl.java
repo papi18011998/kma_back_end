@@ -2,6 +2,7 @@ package com.example.spring_jwt_get_arrays.service.impl;
 
 import com.example.spring_jwt_get_arrays.domain.Matiere;
 import com.example.spring_jwt_get_arrays.dto.MatiereDTO;
+import com.example.spring_jwt_get_arrays.exception.domain.MatiereAlreadyExistException;
 import com.example.spring_jwt_get_arrays.mappers.KmaMapper;
 import com.example.spring_jwt_get_arrays.repository.MatiereRepository;
 import com.example.spring_jwt_get_arrays.service.IMatiere;
@@ -32,8 +33,13 @@ public class MatiereImpl implements IMatiere {
     }
 
     @Override
-    public MatiereDTO save(MatiereDTO matiereDTO) {
-        return null;
+    public MatiereDTO save(MatiereDTO matiereDTO) throws MatiereAlreadyExistException {
+        Matiere foundMatiere = matiereRepository.findByLibelle(matiereDTO.getLibelle());
+        if(foundMatiere != null){
+            throw new MatiereAlreadyExistException("La matière "+matiereDTO.getLibelle()+" existe déjà !!!");
+        }
+        Matiere matiere = matiereRepository.save(mapper.matiereDTO_to_matiere(matiereDTO));
+        return mapper.matiere_to_matiereDTO(matiere);
     }
 
     @Override

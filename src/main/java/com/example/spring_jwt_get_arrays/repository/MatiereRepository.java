@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface MatiereRepository extends JpaRepository<Matiere,Long> {
+    public Matiere findByLibelle(String libelle);
 }

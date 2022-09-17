@@ -84,6 +84,11 @@ public class ExceptionHandling  implements ErrorController {
     public ResponseEntity<HttpResponse> classeAlreadyExistException(ClasseAlreadyExistException invalidNoteException) {
         return createHttpResponse(BAD_REQUEST, invalidNoteException.getMessage());
     }
+
+    @ExceptionHandler(MatiereAlreadyExistException.class)
+    public ResponseEntity<HttpResponse> matiereAlreadyExistException(MatiereAlreadyExistException matiereAlreadyExistException) {
+        return createHttpResponse(FORBIDDEN, matiereAlreadyExistException.getMessage());
+    }
     @ExceptionHandler(InvalidNoteException.class)
     public ResponseEntity<HttpResponse> invalidNoteException(InvalidNoteException invalidNoteException) {
         return createHttpResponse(BAD_REQUEST, invalidNoteException.getMessage());
