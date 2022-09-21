@@ -70,7 +70,7 @@ public class ParentController extends ExceptionHandling {
         parent.setCni(parentForm.getCni());
         parent.setActive(true);
         parent.setNotLocked(true);
-        parent.setUserName(parentForm.getLogin());
+        parent.setUserName(parentForm.getUserName());
         parent.setRole(ROLE_PARENT.name());
         parent.setAuthorities(ROLE_PARENT.getAuthorities());
         parent.setJoinDate(new Date());

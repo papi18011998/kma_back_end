@@ -86,7 +86,7 @@ public class EleveController extends ExceptionHandling {
             parent.setAdresse(eleveForm.getAdresseParent());
             parent.setTelephone(eleveForm.getTelephone());
             parent.setCni(eleveForm.getCni());
-            parent.setUserName(eleveForm.getLogin());
+            parent.setUserName(eleveForm.getUserName());
             parent.setPassword(passwordEncoder.encode(passwordParent));
             parent.setGenre(genreParent);
             parent.setRole(ROLE_PARENT.name());

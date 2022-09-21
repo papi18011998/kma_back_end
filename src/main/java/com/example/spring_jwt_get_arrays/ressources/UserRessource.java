@@ -49,6 +49,7 @@ public class UserRessource extends ExceptionHandling {
 
     }
 
+
     private HttpHeaders getJwtHeaders(UserPrincipal userPrincipal) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER,jwtTokenProvider.generateToken(userPrincipal));
@@ -72,7 +73,7 @@ public class UserRessource extends ExceptionHandling {
     @GetMapping(path = "/username/{username}")
     public UtilisateurDTO findByLogin(@PathVariable(name = "username") String username){
         User foundUser = userService.findUserByUsername(username);
-        return mapper.utilisateur_to_utilisateurDTO(foundUser);
+        return (foundUser != null)?mapper.utilisateur_to_utilisateurDTO(foundUser):null;
     }
     @GetMapping(path = "/telephone/{telephone}")
     public  UtilisateurDTO findByTelephone(@PathVariable(name = "telephone") String telephone){

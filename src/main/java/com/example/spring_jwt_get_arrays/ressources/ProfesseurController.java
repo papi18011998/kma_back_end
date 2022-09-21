@@ -96,4 +96,8 @@ public class ProfesseurController extends ExceptionHandling {
     public ProfesseurDTO getProfesseur(@PathVariable long id) throws UserNotFoundException {
         return iProfesseur.getProfesseur(id);
     }
+    @GetMapping("professeurs/{id}/countManagedEleves")
+    public Long countManagedEleves(@PathVariable long id){
+        return  iProfesseur.countEleves(id);
+    }
 }

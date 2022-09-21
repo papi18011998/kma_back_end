@@ -5,6 +5,8 @@ import com.example.spring_jwt_get_arrays.domain.Matiere;
 import com.example.spring_jwt_get_arrays.domain.Professeur;
 import com.example.spring_jwt_get_arrays.dto.EvaluationDTO;
 import static com.example.spring_jwt_get_arrays.enumeration.Genre.*;
+
+import com.example.spring_jwt_get_arrays.exception.domain.CannotUpdateEvaluationException;
 import com.example.spring_jwt_get_arrays.exception.domain.InvalidNoteException;
 import com.example.spring_jwt_get_arrays.repository.EleveRepository;
 import com.example.spring_jwt_get_arrays.repository.ProfesseurRepository;
@@ -48,7 +50,8 @@ public class EvaluationController{
         }
 //                smsSender.sendSms("Bonjour,\n" +
 //                    civiliteParent+" "+eleve.getParent().getNom()+", le professeur "+ civiliteProfesseur+" "+professeur.getNom()+
-//                    "professeur de "+professeur.getMatiere().getLibelle()+" a ajoute une note de "+ evaluationForm.getNote() +" à votre eleve "+eleve.getPrenom() +" "+ eleve.getNom()+"\n");
+//                    "professeur de "+professeur.getMatiere().getLibelle()+" a ajoute une note de "+ evaluationForm.getNote() +" à votre eleve "+eleve.getPrenom() +" "+ eleve.getNom()+"\n
+//                    ");
         return  iEvaluation.addEvaluation(evaluationForm.getNote(),matiereOfProfesseur,eleve);
     }
     @GetMapping("evaluations/mostfrequent")
@@ -58,5 +61,11 @@ public class EvaluationController{
     @GetMapping("evaluations/avg")
     public long getAverageByClasse(){
         return iEvaluation.getAverageByClasse();
+    }
+
+    @PutMapping("evaluations/{id}")
+    public EvaluationDTO updateEvaluation(@PathVariable long id,
+                                          @RequestBody EvaluationForm evaluationForm) throws CannotUpdateEvaluationException, InvalidNoteException {
+        return iEvaluation.updateEvaluation(id,evaluationForm.getIdProfesseur(),evaluationForm.getNote());
     }
 }

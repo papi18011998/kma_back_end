@@ -93,6 +93,11 @@ public class ExceptionHandling  implements ErrorController {
     public ResponseEntity<HttpResponse> invalidNoteException(InvalidNoteException invalidNoteException) {
         return createHttpResponse(BAD_REQUEST, invalidNoteException.getMessage());
     }
+
+    @ExceptionHandler(CannotUpdateEvaluationException.class)
+    public ResponseEntity<HttpResponse> cannotUpdateEvaluation(CannotUpdateEvaluationException cannotUpdateEvaluationException) {
+        return createHttpResponse(FORBIDDEN, cannotUpdateEvaluationException.getMessage());
+    }
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<HttpResponse> methodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
         HttpMethod supportedMethod = Objects.requireNonNull(exception.getSupportedHttpMethods()).iterator().next();

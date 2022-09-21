@@ -96,6 +96,11 @@ public class ProfesseurImpl implements IProfesseur, UserDetailsService {
     }
 
     @Override
+    public Long countEleves(long professeurId) {
+        return professeurRepository.countManagedEleves(professeurId);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }

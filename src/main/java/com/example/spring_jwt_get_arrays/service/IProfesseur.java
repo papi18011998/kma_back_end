@@ -14,4 +14,5 @@ public interface IProfesseur {
     public ProfesseurDTO updateProfesseur(long id,ProfesseurDTO professeurDTO);
     public List<ClasseDTO> findByProfesseurAndAnneeScolaire(Professeur professeur, String annee);
     public ProfesseurDTO getProfesseur(long id) throws UserNotFoundException;
+    public Long countEleves(long professeurId);
 }

@@ -9,7 +9,7 @@ public class ParentForm {
     private String adresse;
     private String telephone;
     private String cni;
-    private String login;
+    private String userName;
     private long genre_id;
     //Eleve Attributes
     private String prenomEleve;
@@ -22,13 +22,13 @@ public class ParentForm {
     public ParentForm() {
     }
 
-    public ParentForm(String prenom, String nom, String adresse, String telephone, String cni, String login, long genre_id, String prenomEleve, String nomEleve, String adresseEleve, long genre_idEleve, Date date_naissance, long annee) {
+    public ParentForm(String prenom, String nom, String adresse, String telephone, String cni, String userName, long genre_id, String prenomEleve, String nomEleve, String adresseEleve, long genre_idEleve, Date date_naissance, long annee) {
         this.prenom = prenom;
         this.nom = nom;
         this.adresse = adresse;
         this.telephone = telephone;
         this.cni = cni;
-        this.login = login;
+        this.userName = userName;
         this.genre_id = genre_id;
         this.prenomEleve = prenomEleve;
         this.nomEleve = nomEleve;
@@ -76,14 +76,6 @@ public class ParentForm {
 
     public void setCni(String cni) {
         this.cni = cni;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public long getGenre_id() {
@@ -140,5 +132,13 @@ public class ParentForm {
 
     public void setAnnee(long annee) {
         this.annee = annee;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

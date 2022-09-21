@@ -17,13 +17,13 @@ public class EleveForm {
     private String adresseParent;
     private String telephone;
     private String cni;
-    private String login;
+    private String userName;
     private long genreIdParent;
 
     public EleveForm() {
     }
 
-    public EleveForm(String prenom, String nom, String adresse, long genreId, Date date_naissance, long annee, String prenomParent, String nomParent, String adresseParent, String telephone, String cni, String login, long genreIdParent) {
+    public EleveForm(String prenom, String nom, String adresse, long genreId, Date date_naissance, long annee, String prenomParent, String nomParent, String adresseParent, String telephone, String cni, String userName, long genreIdParent) {
         this.prenom = prenom;
         this.nom = nom;
         this.adresse = adresse;
@@ -35,7 +35,7 @@ public class EleveForm {
         this.adresseParent = adresseParent;
         this.telephone = telephone;
         this.cni = cni;
-        this.login = login;
+        this.userName = userName;
         this.genreIdParent = genreIdParent;
     }
 
@@ -127,19 +127,19 @@ public class EleveForm {
         this.cni = cni;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public long getGenreIdParent() {
         return genreIdParent;
     }
 
     public void setGenreIdParent(long genreIdParent) {
         this.genreIdParent = genreIdParent;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
