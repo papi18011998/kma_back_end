@@ -92,8 +92,8 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
                 administrateur.setJoinDate(faker.date().between(df.parse("01-01-2000"),new Date()));
                 administrateur.setRole(ROLE_ADMIN.name());
                 administrateur.setAuthorities(ROLE_ADMIN.getAuthorities());
-                administrateur.setActive(faker.bool().bool());
-                administrateur.setNotLocked(faker.bool().bool());
+                administrateur.setActive(true);
+                administrateur.setNotLocked(true);
                 administrateur.setTelephone("77"+faker.number().digits(7));
                 administrateur.setGenre((Math.random()>0.5)?genreRepository.findById(1L).orElse(null):genreRepository.findById(2L).orElse(null));
                 administrateurRepository.save(administrateur);
@@ -109,8 +109,8 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
                 professeur.setJoinDate(faker.date().between(df.parse("01-01-2000"),new Date()));
                 professeur.setRole(ROLE_PROFESSEUR.name());
                 professeur.setAuthorities(ROLE_PROFESSEUR.getAuthorities());
-                professeur.setActive(faker.bool().bool());
-                professeur.setNotLocked(faker.bool().bool());
+                professeur.setActive(true);
+                professeur.setNotLocked(true);
                 professeur.setTelephone("77"+faker.number().digits(7));
                 professeur.setGenre((Math.random()>0.5)?genreRepository.findById(1L).orElse(null):genreRepository.findById(2L).orElse(null));
                 professeur.setDate_prise_fonction(faker.date().between(df.parse("01-01-2000"),df.parse("01-01-2021")));
@@ -148,8 +148,8 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
                 parent.setJoinDate(faker.date().between(df.parse("01-01-2000"),new Date()));
                 parent.setRole(ROLE_PARENT.name());
                 parent.setAuthorities(ROLE_PARENT.getAuthorities());
-                parent.setActive(faker.bool().bool());
-                parent.setNotLocked(faker.bool().bool());
+                parent.setActive(true);
+                parent.setNotLocked(true);
                 parent.setTelephone("77"+faker.number().digits(7));
                 parent.setGenre((Math.random()>0.5)?genreRepository.findById(1L).orElse(null):genreRepository.findById(2L).orElse(null));
                 parent.setCni((parent.getGenre().getId()==1)?"1"+faker.number().digits(12):"2"+faker.number().digits(12));
@@ -168,8 +168,8 @@ public class SpringJwtGetArraysApplication implements  CommandLineRunner{
                         eleve.setJoinDate(faker.date().between(df.parse("01-01-2000"),new Date()));
                         eleve.setRole(ROLE_ELEVE.name());
                         eleve.setAuthorities(ROLE_ELEVE.getAuthorities());
-                        eleve.setActive(faker.bool().bool());
-                        eleve.setNotLocked(faker.bool().bool());
+                        eleve.setActive(true);
+                        eleve.setNotLocked(true);
                         eleve.setGenre((Math.random()>0.5)?genreRepository.findById(1L).orElse(null):genreRepository.findById(2L).orElse(null));
                         eleve.setDate_naissance(faker.date().between(df.parse("01-01-1998"),df.parse("01-01-2017")));
                         eleveRepository.save(eleve);

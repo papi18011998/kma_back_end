@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 @CrossOrigin("*")
 public interface EvaluationRepository extends JpaRepository<Evaluation,Long> {
-    @Query(value = "SELECT note,COUNT(note) AS 'occurrence' FROM evaluation GROUP BY note ORDER BY 'occurrence' DESC LIMIT 1",nativeQuery = true)
+    @Query(value = "SELECT note,COUNT(note) AS 'occurrence' FROM evaluation GROUP BY note ORDER BY COUNT(*) DESC LIMIT 1\n",nativeQuery = true)
     public long getMostFrequentScore();
     @Query(value = "SELECT AVG(note) \n" +
             "FROM evaluation,eleve_classe,classe\n" +

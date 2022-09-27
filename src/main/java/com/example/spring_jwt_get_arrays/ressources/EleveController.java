@@ -145,4 +145,20 @@ public class EleveController extends ExceptionHandling {
     public EleveDTO getEleve(@PathVariable long id) throws UserNotFoundException {
         return ieleve.getEleve(id);
     }
+    @GetMapping("eleves/{id}/bestscore")
+    public String bestScore(@PathVariable long id){
+        String score = eleveRepository.bestScore(id);
+        return (score==null)?null:score;
+    }
+    @GetMapping("eleves/{id}/average")
+    public String average(@PathVariable long id){
+        String score = eleveRepository.averageScore(id);
+        return (score==null)?null:score;
+    }
+
+    @GetMapping("eleves/{id}/frequentscore")
+    public String frequentscore(@PathVariable long id){
+        return eleveRepository.frequentScore(id);
+    }
+
 }
